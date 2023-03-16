@@ -1,3 +1,11 @@
+/* Q1 */
+SELECT * 
+FROM Works_on
+WHERE Pno NOT IN (SELECT Pnumber FROM Project);
+
+
+/* Q2 */
+/* a */
 ALTER TABLE EMPLOYEE DROP constraint companyFK1 ;
 ALTER TABLE EMPLOYEE  DROP constraint companyFK2 ;
 ALTER TABLE WORKS_ON DROP constraint companyFK3 ;
@@ -51,11 +59,29 @@ ON DELETE SET NULL
 ON UPDATE CASCADE;
 
 
+/* b */
+UPDATE EMPLOYEE
+SET ssn = '99996666'
+WHERE Fname = 'Franklin' AND Lname = 'Wong'\
+/* 
+    When we change Franklin Wong’s SSN to 99996666, the Mgr_ssn field that has the ssn of Franklin Wong 
+in DEPARTMENT will be changed to 99996666. Along with that, in the Essn in WORK_ON, the field that 
+contains the ssn of Franklin Wong will be changed to 99996666. The Essn of all Franklin Wong’s DEPENDENT 
+will also be changed to 99996666. Finally, the Super_ssn of all EMPOYEE that Franklin Wong manages will 
+be changed to 99996666.
+*/
 
+
+/* c */
 INSERT INTO EMPLOYEE(Fname, Minit, Lname, Ssn, Bdate, Address, Sex, Salary, Super_ssn, Dno) VALUES ('Dai','D','Vo','999999999','2002-01-01', '2000 Spruce St., Winnipe, MB','M',25000,'123456789',5);
 
 
+/* d */
 DELETE FROM EMPLOYEE 
 WHERE Fname = 'James' AND Lname = 'Borg';
-
-
+/* 
+    To delete James Borg, we need to update table DEPARTMEMT and EMPLOYEE so that Mrg_ssn and Super_ssn 
+can accept null value. After deleting the record that contains James Borg, we will see that the value 
+of Super_ssn of people, who has James Borg as their supervisor, be set to null. Along with that, the 
+value of Mgr_ssn of Department, where has James Borg as manager, will also be set to null.
+ */
