@@ -152,5 +152,16 @@ INSERT INTO ACCOUNT(accNum, balance, branch_number, bank_number, overdraft, inte
 INSERT INTO CUSTOMER_HAS_ACCOUNT(custNum, accNum, branch_number, bank_number) VALUES ('224', '111111', '2', '003');
 
 /* 4f */
-SELECT * 
-FROM 
+
+SELECT * FROM (BANK b 
+INNER JOIN BRANCH br ON b.number = br.bank_number
+INNER JOIN ACCOUNT a ON b.number = a.bank_number AND br.number = a.branch_number
+INNER JOIN CUSTOMER_HAS_ACCOUNT cha ON a.accNum = cha.accNum AND  b.number = cha.bank_number AND br.number = cha.branch_number
+INNER JOIN CUSTOMER c ON c.custNum = cha.custNum) t1
+FULL OUTER JOIN
+(BANK b2
+INNER JOIN BRANCH br2 ON b2.number = br2.bank_number
+INNER JOIN LOAN l ON b2.number = l.bank_number AND br2.number = l.branch_number
+INNER JOIN CUSTOMER_BORROW_LOAN cbl ON l.loanNum = cbl.loanNum AND  b2.number = cbl.bank_number AND br2.number = cbl.branch_number
+INNER JOIN CUSTOMER c2 ON c2.custNum = cbl.custNum) t2
+ON t1.name = t2.name
