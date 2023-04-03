@@ -1,0 +1,30 @@
+5
+	a. 
+		db.Department.updateOne({Dname:"Headquarters"}, {$set:{location:["Houston"]}});
+		db.Department.updateOne({Dname: "Research"}, {$set:{"location":["Bellaire", "Sugarland", "Houston"]}});
+		db.Department.updateOne({Dname: "Administration"}, {$set:{"location":["Stafford"]}});
+
+	B.
+		db.Employee.updateOne({Ssn:"453453453"}, {$set:{Project:[{Pno:2, Hours:20}, {Pno:1, Hours:20}]}});
+		db.Employee.updateOne({Ssn:"987987987"}, {$set:{Project:[{Pno:10, Hours:35}, {Pno:30, Hours:5}]}})
+		db.Employee.updateOne({Ssn:"999887777"}, {$set:{Project:[{Pno:10, Hours:10}, {Pno:30, Hours:30}]}});
+		db.Employee.updateOne({Ssn:"333445555"}, {$set:{Project:[{Pno:3, Hours:10}, {Pno:2, Hours:10}, {Pno:20, Hours:10}, {Pno:10, Hours:10}]}});
+		db.Employee.updateOne({Ssn:"987654321"}, {$set:{Project:[{Pno:20, Hours:15}, {Pno:30, Hours:20}]}})
+		db.Employee.updateOne({Ssn:"888665555"}, {$set:{Project:[{Pno:20}]}});
+		db.Employee.updateOne({Ssn:"666884444"}, {$set:{Project:[{Pno:3, Hours:40}]}});
+		db.Employee.updateOne({Ssn:"123456789"}, {$set:{Project:[{Pno:2, Hours:7.5},{Pno:1, Hours:32.5}]}});
+
+	c.
+		db.Works_on.drop();
+		db.Dept_location.drop();
+
+	d.
+		db.Employee.insertOne({Ssn:"3129620", Fname:"Dai", Lname:"Vo", Minit:"D", Bdate:"2001-01-01", Address:"1 North, Ontario, AB", Sex: "Male", Salary:30000, Super_ssn:"453453453", Dno: 1, Dependents: []});
+	e.
+		i. db.Department.find({}, {Dname: 1, Dnumber: 1, location: 1, _id: 0}).sort({Dnumber: 1});
+		ii. db.Employee.find({},{Ssn: 1, Project: 1, _id: 0}).sort({Ssn: -1});
+		iii. db.Department.find({}, {Dname: 1, "Project.Pname": 1, _id: 0}).sort({Dname: 1});
+		iv. db.Employee.distinct("Project.Pno")
+		v. db.Employee.find({$and:[{"Project.Pno":1}, {"Project.Pno" : 2}]},{Fname: 1, Lname: 1, Dno: 1, _id: 0}).sort({Lname: 1})
+		vi.  db.Employee.find({$and:[{"Dependents.Relationship": "Son"}, {"Dependents.Relationship": "Daughter"},{"Dependents.Relationship": "Spouse"},]},{Lname: 1, _id: 0}).sort({Fname: 1})
+		vii. db.Employee.find({$or:[{"Dependents.Relationship": "Son"}, {"Dependents.Relationship": "Daughter"}]}, {Lname: 1, _id: 0})
