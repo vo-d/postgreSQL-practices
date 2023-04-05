@@ -24,7 +24,10 @@
 		i. db.Department.find({}, {Dname: 1, Dnumber: 1, location: 1, _id: 0}).sort({Dnumber: 1});
 		ii. db.Employee.find({},{Ssn: 1, Project: 1, _id: 0}).sort({Ssn: -1});
 		iii. db.Department.find({}, {Dname: 1, "Project.Pname": 1, _id: 0}).sort({Dname: 1});
-		iv. db.Employee.distinct("Project.Pno")
-		v. db.Employee.find({$and:[{"Project.Pno":1}, {"Project.Pno" : 2}]},{Fname: 1, Lname: 1, Dno: 1, _id: 0}).sort({Lname: 1})
-		vi.  db.Employee.find({$and:[{"Dependents.Relationship": "Son"}, {"Dependents.Relationship": "Daughter"},{"Dependents.Relationship": "Spouse"},]},{Lname: 1, _id: 0}).sort({Fname: 1})
-		vii. db.Employee.find({$or:[{"Dependents.Relationship": "Son"}, {"Dependents.Relationship": "Daughter"}]}, {Lname: 1, _id: 0})
+		iv. db.Employee.distinct("Project.Pno");
+		v. db.Employee.find({$and:[{"Project.Pno":1}, {"Project.Pno" : 2}]},{Fname: 1, Lname: 1, Dno: 1, _id: 0}).sort({Lname: 1});
+		vi.  db.Employee.find({$and:[{"Dependents.Relationship": "Son"}, {"Dependents.Relationship": "Daughter"},{"Dependents.Relationship": "Spouse"},]},{Lname: 1, _id: 0}).sort({Fname: 1});
+		vii. db.Employee.find({$or:[{"Dependents.Relationship": "Son"}, {"Dependents.Relationship": "Daughter"}]}, {Lname: 1, _id: 0});
+		viii. db.Employee.find({"Project.Hours": {$gt: 30}},{Lname: 1, _id: 0});
+		ix. db.Employee.find({$and:[{Sex: "Male"}, {Salary: {$lt: 50000}}]},{Lname: 1, _id: 0});
+		x. db.Employee.find({},{Lname: 1, _id: 0}).sort({Bdate: 1}).limit(1)
